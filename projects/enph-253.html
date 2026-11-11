@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competition Robot: Sensor Firmware · Theo Price-Parsons</title>
+<meta name="description" content="Theo Price-Parsons. Engineering Physics at UBC. Motor control, embedded firmware, PCBs and robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <a class="mark" href="../index.html">Theo Price-Parsons</a>
+  <nav><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub</a><a href="mailto:priceparsonstheodore@gmail.com">Email</a></nav>
+</header>
+
+<article class="project">
+  <a class="back" href="../index.html#work">← All projects</a>
+  <p class="label"><span class="hl-n">02</span> ENPH 253 · Robot Summer · Team</p>
+  <h1>Competition Robot: Sensor Firmware</h1>
+  <p class="intro">Dual ESP32-S3 mecanum robot. I wrote the sensor ESP: IR beacon detection, a metal detector, optical flow and the inter-ESP protocol.</p>
+  <div class="meta"><div class="tags"><span>ESP32-S3</span><span>ESP-IDF</span><span>FreeRTOS</span><span>DSP</span></div><a class="btn solid" href="https://github.com/SnackOverflow707/Robot-Summer-Main-Code" target="_blank" rel="noopener">View source ↗</a></div>
+  <div class="photos n2"><figure class="ph"><div class="frame"><a href="../assets/enph-253-robot.jpg" target="_blank"><img src="../assets/enph-253-robot.jpg" alt="The robot after competition" loading="lazy"></a></div><figcaption>The robot after competition</figcaption></figure><figure class="ph"><div class="frame fit"><a href="../assets/enph-253-sensor-board.jpg" target="_blank"><img src="../assets/enph-253-sensor-board.jpg" alt="Sensor board for the sensor ESP (KiCad, side project)" loading="lazy"></a></div><figcaption>Sensor board for the sensor ESP (KiCad, side project)</figcaption></figure></div>
+  <section class="dgs"><h2 class="dg-h">How it works</h2><figure class="diagram"><div class="dg-scroll"><svg viewBox="0 0 800 300" role="img" aria-label="Sensor ESP data flow"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ahd"/></marker></defs><g class="bx "><rect x="20" y="30" width="180" height="56" rx="3"/><text class="bt" x="110.0" y="52.0">IR phototransistors</text><text class="bs" x="110.0" y="70.0">1 kHz / 10 kHz beacons</text></g><g class="bx "><rect x="20" y="120" width="180" height="56" rx="3"/><text class="bt" x="110.0" y="142.0">Colpitts oscillator</text><text class="bs" x="110.0" y="160.0">metal detector</text></g><g class="bx "><rect x="20" y="210" width="180" height="56" rx="3"/><text class="bt" x="110.0" y="232.0">2 × PMW3901</text><text class="bs" x="110.0" y="250.0">optical flow</text></g><g class="bx mcu"><rect x="290" y="30" width="210" height="236" rx="3"/><text class="bt" x="395.0" y="60">Sensor ESP32-S3</text></g><text class="nt inv" x="395" y="110" text-anchor="middle">ADC DMA → Goertzel</text><text class="nt inv" x="395" y="150" text-anchor="middle">PCNT frequency count</text><text class="nt inv" x="395" y="190" text-anchor="middle">odometry</text><text class="nt inv" x="395" y="230" text-anchor="middle">FreeRTOS tasks</text><path class="ar" d="M200,58 L288,58" marker-end="url(#ah)"/><text class="al" x="244.0" y="50.0" text-anchor="middle">analog</text><path class="ar" d="M200,148 L288,148" marker-end="url(#ah)"/><text class="al" x="244.0" y="140.0" text-anchor="middle">square wave</text><path class="ar" d="M200,238 L288,238" marker-end="url(#ah)"/><text class="al" x="244.0" y="230.0" text-anchor="middle">SPI</text><g class="bx "><rect x="600" y="30" width="180" height="56" rx="3"/><text class="bt" x="690.0" y="52.0">Main ESP32-S3</text><text class="bs" x="690.0" y="70.0">drive + strategy</text></g><g class="bx acc"><rect x="600" y="210" width="180" height="56" rx="3"/><text class="bt" x="690.0" y="232.0">Mecanum drive</text><text class="bs" x="690.0" y="250.0">+ servos</text></g><path class="ar" d="M500,58 L598,58" marker-end="url(#ah)"/><text class="al" x="549" y="50" text-anchor="middle">UART frames</text><text class="nt" x="550" y="78" text-anchor="middle">length + XOR</text><path class="ar" d="M690,86 L690,208" marker-end="url(#ah)"/></svg></div><figcaption>Sensor ESP data flow</figcaption></figure></section>
+  <div class="body">
+<h2>Overview</h2><p>ENPH 253 (Robot Summer) is UBC Engineering Physics' competitive robotics course. Our robot used a mecanum drive and two ESP32-S3s. I owned the sensor ESP firmware, written in ESP-IDF.</p>
+<h2>What I built</h2><ul><li>IR beacon detection at 1 kHz and 10 kHz using the Goertzel algorithm on continuous ADC DMA.</li><li>Metal detection with a Colpitts oscillator whose frequency is counted by the PCNT peripheral.</li><li>Dual PMW3901 optical flow sensors for odometry.</li><li>A length-prefixed, XOR-checksummed UART framing protocol between the two ESPs.</li><li>FreeRTOS task architecture and a WiFi PID tuning dashboard.</li></ul>
+<h2>Debugging</h2><p>A lot of the work was toolchain: pioarduino vs. official PlatformIO, native USB CDC on the S3, and a corrupted PlatformIO cache.</p>
+<h2>Next</h2><p>We didn't get to use PCBs in the course, so I'm designing a KiCad sensor board for this firmware as a side exercise.</p>
+  </div>
+  <nav class="pn">
+    <a href="foc-esc.html"><small>← Previous</small><b>Custom FOC ESC</b></a>
+    <a class="r" href="sailbot.html"><small>Next →</small><b>UBC Sailbot: Electrical Drive</b></a>
+  </nav>
+</article>
+<footer class="foot">
+  <div><span class="label">Get in touch</span><a class="big" href="mailto:priceparsonstheodore@gmail.com">priceparsonstheodore@gmail.com</a></div>
+  <div class="foot-links"><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub ↗</a><!-- <a href="resume.pdf" target="_blank">Resume ↗</a> --><!-- <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn ↗</a> --></div>
+  <p class="fine">Printed on 100% recycled pixels. Vancouver, BC.</p>
+</footer>
+</div>
+</body>
+</html>

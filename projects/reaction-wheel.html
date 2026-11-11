@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reaction-Wheel Inverted Pendulum · Theo Price-Parsons</title>
+<meta name="description" content="Theo Price-Parsons. Engineering Physics at UBC. Motor control, embedded firmware, PCBs and robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <a class="mark" href="../index.html">Theo Price-Parsons</a>
+  <nav><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub</a><a href="mailto:priceparsonstheodore@gmail.com">Email</a></nav>
+</header>
+
+<article class="project">
+  <a class="back" href="../index.html#work">← All projects</a>
+  <p class="label"><span class="hl-n">04</span> Controls · Solo</p>
+  <h1>Reaction-Wheel Inverted Pendulum</h1>
+  <p class="intro">Balancing a pendulum with a spinning reaction wheel. LQR state feedback with an observer, plus a Python simulation package.</p>
+  <div class="meta"><div class="tags"><span>LQR</span><span>Luenberger observer</span><span>STM32F446RE</span><span>Python</span></div></div>
+  <div class="photos n0"></div>
+  <section class="dgs"><h2 class="dg-h">How it works</h2><figure class="diagram"><div class="dg-scroll"><svg viewBox="0 0 800 270" role="img" aria-label="LQR + observer loop"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ahd"/></marker></defs><g class="grp"><rect x="30" y="20" width="470" height="230" rx="4"/><text x="40" y="38">STM32F446RE</text></g><g class="bx "><rect x="60" y="60" width="190" height="60" rx="3"/><text class="bt" x="155.0" y="84.0">u = −K x̂</text><text class="bs" x="155.0" y="102.0">LQR gain</text></g><g class="bx acc"><rect x="570" y="60" width="200" height="60" rx="3"/><text class="bt" x="670.0" y="84.0">Pendulum + wheel</text><text class="bs" x="670.0" y="102.0">plant</text></g><g class="bx "><rect x="280" y="170" width="190" height="60" rx="3"/><text class="bt" x="375.0" y="194.0">Luenberger observer</text><text class="bs" x="375.0" y="212.0">x̂&#x27; = Ax̂ + Bu + L(y − Cx̂)</text></g><path class="ar" d="M250,90 L568,90" marker-end="url(#ah)"/><text class="al" x="410" y="82" text-anchor="middle">u (wheel torque)</text><path class="ar" d="M670,120 L670,200 L472,200" marker-end="url(#ah)"/><text class="al" x="580" y="192" text-anchor="middle">y (measured)</text><path class="ar" d="M280,200 L155,200 L155,122" marker-end="url(#ah)"/><text class="al" x="215" y="192" text-anchor="middle">x̂</text><path class="ar dash" d="M375,90 L375,168" marker-end="url(#ah)"/></svg></div><figcaption>LQR + observer loop</figcaption></figure></section>
+  <div class="body">
+<h2>Overview</h2><p>A long-running solo project: an inverted pendulum kept upright by accelerating a reaction wheel. The controller runs on an STM32F446RE.</p>
+<h2>Control</h2><ul><li>Full-state feedback designed with LQR.</li><li>A Luenberger observer estimates the states that aren't measured directly.</li></ul>
+<h2>Simulation</h2><p>The simulation is being refactored into a proper Python package with separate sim/ modules, so the controller can be tuned and tested before it touches hardware.</p>
+  </div>
+  <nav class="pn">
+    <a href="sailbot.html"><small>← Previous</small><b>UBC Sailbot: Electrical Drive</b></a>
+    <a class="r" href="can-bootloader.html"><small>Next →</small><b>Multi-Node CAN Bootloader</b></a>
+  </nav>
+</article>
+<footer class="foot">
+  <div><span class="label">Get in touch</span><a class="big" href="mailto:priceparsonstheodore@gmail.com">priceparsonstheodore@gmail.com</a></div>
+  <div class="foot-links"><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub ↗</a><!-- <a href="resume.pdf" target="_blank">Resume ↗</a> --><!-- <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn ↗</a> --></div>
+  <p class="fine">Printed on 100% recycled pixels. Vancouver, BC.</p>
+</footer>
+</div>
+</body>
+</html>

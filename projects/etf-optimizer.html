@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF Portfolio Optimizer · Theo Price-Parsons</title>
+<meta name="description" content="Theo Price-Parsons. Engineering Physics at UBC. Motor control, embedded firmware, PCBs and robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <a class="mark" href="../index.html">Theo Price-Parsons</a>
+  <nav><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub</a><a href="mailto:priceparsonstheodore@gmail.com">Email</a></nav>
+</header>
+
+<article class="project">
+  <a class="back" href="../index.html#work">← All projects</a>
+  <p class="label"><span class="hl-n">09</span> Quant · Software · Collab</p>
+  <h1>ETF Portfolio Optimizer</h1>
+  <p class="intro">Constrained mean-variance optimizer with a closed-form Lagrangian solution and Kalman-filtered prices.</p>
+  <div class="meta"><div class="tags"><span>Python</span><span>Optimization</span><span>Kalman filter</span></div></div>
+  <div class="photos n0"></div>
+  <section class="dgs"><h2 class="dg-h">How it works</h2><figure class="diagram"><div class="dg-scroll"><svg viewBox="0 0 800 200" role="img" aria-label="Optimizer pipeline"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ahd"/></marker></defs><g class="bx "><rect x="20" y="50" width="120" height="60" rx="3"/><text class="bt" x="80.0" y="74.0">Price data</text><text class="bs" x="80.0" y="92.0">ETFs</text></g><g class="bx "><rect x="180" y="50" width="130" height="60" rx="3"/><text class="bt" x="245.0" y="74.0">Kalman filter</text><text class="bs" x="245.0" y="92.0">smoothing</text></g><g class="bx "><rect x="350" y="50" width="150" height="60" rx="3"/><text class="bt" x="425.0" y="74.0">μ, Σ</text><text class="bs" x="425.0" y="92.0">same time scale</text></g><g class="bx acc"><rect x="540" y="30" width="150" height="60" rx="3"/><text class="bt" x="615.0" y="54.0">Closed-form</text><text class="bs" x="615.0" y="72.0">Lagrangian</text></g><g class="bx dash"><rect x="540" y="120" width="150" height="50" rx="3"/><text class="bt" x="615.0" y="139.0">SLSQP</text><text class="bs" x="615.0" y="157.0">fallback</text></g><g class="bx "><rect x="720" y="50" width="64" height="60" rx="3"/><text class="bt" x="752.0" y="74.0">w</text><text class="bs" x="752.0" y="92.0">weights</text></g><path class="ar" d="M140,80 L178,80" marker-end="url(#ah)"/><path class="ar" d="M310,80 L348,80" marker-end="url(#ah)"/><path class="ar" d="M500,70 L538,60" marker-end="url(#ah)"/><path class="ar dash" d="M500,95 L538,140" marker-end="url(#ah)"/><path class="ar" d="M690,60 L718,75" marker-end="url(#ah)"/><path class="ar dash" d="M690,145 L718,95" marker-end="url(#ah)"/><text class="nt big" x="250" y="165" text-anchor="middle">min  wᵀΣw   s.t.  constraints on w</text></svg></div><figcaption>Optimizer pipeline</figcaption></figure></section>
+  <div class="body">
+<h2>Overview</h2><p>A portfolio optimizer for ETFs, built with a friend.</p>
+<h2>Math engine</h2><ul><li>Constrained mean-variance optimization solved in closed form with Lagrange multipliers, falling back to SLSQP when the closed form doesn't apply.</li><li>Kalman filter to smooth prices before estimating returns and covariance.</li><li>Fixed a covariance time-scale mismatch that was skewing results.</li></ul>
+  </div>
+  <nav class="pn">
+    <a href="servo-pcb.html"><small>← Previous</small><b>Continuous Servo Controller PCB</b></a>
+    <a class="r" href="foc-esc.html"><small>Next →</small><b>Custom FOC ESC</b></a>
+  </nav>
+</article>
+<footer class="foot">
+  <div><span class="label">Get in touch</span><a class="big" href="mailto:priceparsonstheodore@gmail.com">priceparsonstheodore@gmail.com</a></div>
+  <div class="foot-links"><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub ↗</a><!-- <a href="resume.pdf" target="_blank">Resume ↗</a> --><!-- <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn ↗</a> --></div>
+  <p class="fine">Printed on 100% recycled pixels. Vancouver, BC.</p>
+</footer>
+</div>
+</body>
+</html>

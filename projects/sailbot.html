@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UBC Sailbot: Electrical Drive · Theo Price-Parsons</title>
+<meta name="description" content="Theo Price-Parsons. Engineering Physics at UBC. Motor control, embedded firmware, PCBs and robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <a class="mark" href="../index.html">Theo Price-Parsons</a>
+  <nav><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub</a><a href="mailto:priceparsonstheodore@gmail.com">Email</a></nav>
+</header>
+
+<article class="project">
+  <a class="back" href="../index.html#work">← All projects</a>
+  <p class="label"><span class="hl-n">03</span> UBC Sailbot · Team</p>
+  <h1>UBC Sailbot: Electrical Drive</h1>
+  <p class="intro">Electrical Drive Team on an autonomous sailboat: IMU firmware, GNSS debugging, rudder hardware and a sensorless FOC driver.</p>
+  <div class="meta"><div class="tags"><span>RP2040</span><span>FreeRTOS</span><span>EKF</span><span>FDCAN</span><span>FOC</span></div></div>
+  <div class="photos n2"><figure class="ph"><div class="frame"><a href="../assets/sailbot-boat.jpg" target="_blank"><img src="../assets/sailbot-boat.jpg" alt="UBC Sailbot on the water off Vancouver" loading="lazy"></a></div><figcaption>UBC Sailbot on the water off Vancouver</figcaption></figure><figure class="ph"><div class="frame fit"><a href="../assets/sailbot-driver-board.jpg" target="_blank"><img src="../assets/sailbot-driver-board.jpg" alt="The team&#x27;s BLDC driver dev board V1, which I&#x27;ve been fixing" loading="lazy"></a></div><figcaption>The team&#x27;s BLDC driver dev board V1, which I&#x27;ve been fixing</figcaption></figure></div>
+  <section class="dgs"><h2 class="dg-h">How it works</h2><figure class="diagram"><div class="dg-scroll"><svg viewBox="0 0 800 330" role="img" aria-label="Where my work sits on the boat"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ahd"/></marker></defs><g class="grp"><rect x="20" y="176" width="760" height="140" rx="4"/><text x="30" y="194">Motor drive</text></g><g class="grp"><rect x="20" y="16" width="760" height="140" rx="4"/><text x="30" y="34">PLRS-IMU firmware</text></g><g class="bx "><rect x="40" y="56" width="130" height="60" rx="3"/><text class="bt" x="105.0" y="80.0">IMU</text><text class="bs" x="105.0" y="98.0">sensors</text></g><g class="bx mcu"><rect x="220" y="46" width="400" height="80" rx="3"/><text class="bt" x="420.0" y="76">RP2040 · FreeRTOS</text></g><text class="nt inv" x="280" y="106" text-anchor="middle">sampling</text><text class="nt inv" x="400" y="106" text-anchor="middle">EKF fusion</text><text class="nt inv" x="540" y="106" text-anchor="middle">telemetry task</text><path class="ar" d="M318,102 L348,102" marker-end="url(#ah)"/><path class="ar" d="M452,102 L482,102" marker-end="url(#ah)"/><g class="bx "><rect x="660" y="56" width="100" height="60" rx="3"/><text class="bt" x="710.0" y="80.0">Boat</text><text class="bs" x="710.0" y="98.0">systems</text></g><path class="ar" d="M170,86 L218,86" marker-end="url(#ah)"/><path class="ar" d="M620,86 L658,86" marker-end="url(#ah)"/><g class="bx "><rect x="40" y="216" width="130" height="60" rx="3"/><text class="bt" x="105.0" y="240.0">24 V</text><text class="bs" x="105.0" y="258.0">supply</text></g><g class="bx acc"><rect x="220" y="206" width="220" height="80" rx="3"/><text class="bt" x="330.0" y="240.0">BLDC driver dev board V1</text><text class="bs" x="330.0" y="258.0">team board · debugging + fixes</text></g><g class="bx dash"><rect x="478" y="216" width="152" height="60" rx="3"/><text class="bt" x="554.0" y="240.0">Sensorless FOC</text><text class="bs" x="554.0" y="258.0">firmware (assigned)</text></g><g class="bx "><rect x="660" y="216" width="100" height="60" rx="3"/><text class="bt" x="710.0" y="240.0">Gimbal</text><text class="bs" x="710.0" y="258.0">BLDC ≤ 22 A</text></g><path class="ar" d="M170,246 L218,246" marker-end="url(#ah)"/><path class="ar dash" d="M478,246 L442,246" marker-end="url(#ah)"/><path class="ar" d="M440,300 L710,300 L710,278" marker-end="url(#ah)"/><text class="al" x="580" y="294" text-anchor="middle">3-phase</text></svg></div><figcaption>Where my work sits on the boat</figcaption></figure></section>
+  <div class="body">
+<h2>Overview</h2><p>UBC Sailbot builds autonomous sailboats. I'm on the Electrical Drive Team.</p>
+<h2>Work</h2><ul><li>PLRS-IMU: RP2040 / FreeRTOS firmware with EKF sensor fusion; contributed the telemetry task split.</li><li>Helped debug the boat's Septentrio mosaic-H GNSS receiver.</li><li>Testing and troubleshooting the mast encoder, rudder motor and servo on the FDCAN bus.</li><li>Debugging and fixing the team's BLDC driver dev board (V1), which had a number of problems.</li><li>Assigned the sensorless FOC driver for a 24 V gimbal motor (up to 22 A), waiting on hardware.</li></ul>
+  </div>
+  <nav class="pn">
+    <a href="enph-253.html"><small>← Previous</small><b>Competition Robot: Sensor Firmware</b></a>
+    <a class="r" href="reaction-wheel.html"><small>Next →</small><b>Reaction-Wheel Inverted Pendulum</b></a>
+  </nav>
+</article>
+<footer class="foot">
+  <div><span class="label">Get in touch</span><a class="big" href="mailto:priceparsonstheodore@gmail.com">priceparsonstheodore@gmail.com</a></div>
+  <div class="foot-links"><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub ↗</a><!-- <a href="resume.pdf" target="_blank">Resume ↗</a> --><!-- <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn ↗</a> --></div>
+  <p class="fine">Printed on 100% recycled pixels. Vancouver, BC.</p>
+</footer>
+</div>
+</body>
+</html>
