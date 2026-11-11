@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theo Price-Parsons</title>
+<meta name="description" content="Theo Price-Parsons. Engineering Physics at UBC. Motor control, embedded firmware, PCBs and robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <a class="mark" href="index.html">Theo Price-Parsons</a>
+  <nav><a href="index.html#work">Work</a><a href="index.html#about">About</a><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub</a><a href="mailto:priceparsonstheodore@gmail.com">Email</a></nav>
+</header>
+
+<section class="hero" id="about">
+  <p class="label">Engineering Physics · UBC co-op · Vancouver, BC</p>
+  <h1>I build motor controllers, embedded firmware <span class="hl">and robots.</span></h1>
+  <p class="intro">Mostly STM32 and ESP32, KiCad for the boards, and a lot of control theory in between. Currently looking for mechatronics, controls and robotics co-op roles. English, Français, Deutsch.</p>
+  <div class="cta"><a class="btn solid" href="#work">See the work</a><a class="btn" href="mailto:priceparsonstheodore@gmail.com">Say hi</a></div>
+</section>
+
+<section id="work">
+  <h2 class="sec"><span>Featured</span><span class="count">9 projects</span></h2>
+  <div class="featured">
+    <a class="card" href="projects/foc-esc.html">
+      <div class="cover"><img src="assets/foc-esc-spin-poster.jpg" alt="Custom FOC ESC" loading="lazy"></div>
+      <div class="cbody"><span class="n">01 · Hardware + Firmware</span><b>Custom FOC ESC</b><small>Field-oriented control motor driver designed from scratch. 4-layer board, closed-loop current and speed control on a gimbal motor.</small><span class="go">Read more →</span></div>
+    </a>
+    <a class="card" href="projects/enph-253.html">
+      <div class="cover"><img src="assets/enph-253-robot.jpg" alt="Competition Robot: Sensor Firmware" loading="lazy"></div>
+      <div class="cbody"><span class="n">02 · ENPH 253 · Robot Summer</span><b>Competition Robot: Sensor Firmware</b><small>Dual ESP32-S3 mecanum robot. I wrote the sensor ESP: IR beacon detection, a metal detector, optical flow and the inter-ESP protocol.</small><span class="go">Read more →</span></div>
+    </a>
+    <a class="card" href="projects/sailbot.html">
+      <div class="cover"><img src="assets/sailbot-boat.jpg" alt="UBC Sailbot: Electrical Drive" loading="lazy"></div>
+      <div class="cbody"><span class="n">03 · UBC Sailbot</span><b>UBC Sailbot: Electrical Drive</b><small>Electrical Drive Team on an autonomous sailboat: IMU firmware, GNSS debugging, rudder hardware and a sensorless FOC driver.</small><span class="go">Read more →</span></div>
+    </a>
+  </div>
+  <h2 class="sec more"><span>More projects</span></h2>
+  <div class="index">
+    <a class="row" href="projects/reaction-wheel.html">
+      <span class="n">04</span>
+      <span class="t"><b>Reaction-Wheel Inverted Pendulum</b><small>Balancing a pendulum with a spinning reaction wheel. LQR state feedback with an observer, plus a Python simulation package.</small></span>
+      <span class="k">Controls</span>
+      <span class="s">Solo</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/can-bootloader.html">
+      <span class="n">05</span>
+      <span class="t"><b>Multi-Node CAN Bootloader</b><small>A custom bootloader to flash several STM32s at once over a CAN bus.</small></span>
+      <span class="k">CAN · Bootloaders</span>
+      <span class="s">In progress</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/fizz-detective.html">
+      <span class="n">06</span>
+      <span class="t"><b>Fizz Detective</b><small>Autonomous robot competition in Gazebo: camera-based driving and clue reading with ROS 2 and TensorFlow.</small></span>
+      <span class="k">ENPH 353 · ROS 2</span>
+      <span class="s">In progress</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/sonar.html">
+      <span class="n">07</span>
+      <span class="t"><b>Phased-Array Imaging Sonar</b><small>An 8×8 ultrasonic phased array at 40 kHz for 3D imaging in air, on a DE10-Lite FPGA with a custom shield.</small></span>
+      <span class="k">FPGA · PCB</span>
+      <span class="s">In design</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/servo-pcb.html">
+      <span class="n">08</span>
+      <span class="t"><b>Continuous Servo Controller PCB</b><small>My first board: a motor control PCB taken from breadboard prototype to Gerbers.</small></span>
+      <span class="k">Hardware</span>
+      <span class="s">First PCB</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/etf-optimizer.html">
+      <span class="n">09</span>
+      <span class="t"><b>ETF Portfolio Optimizer</b><small>Constrained mean-variance optimizer with a closed-form Lagrangian solution and Kalman-filtered prices.</small></span>
+      <span class="k">Quant · Software</span>
+      <span class="s">Collab</span>
+      <span class="arr">→</span>
+    </a>
+  </div>
+</section>
+
+<section class="two">
+  <div>
+    <h2 class="sec"><span>Toolbox</span></h2>
+    <dl class="tools"><div><dt>Embedded</dt><dd>C · STM32 (CubeMX, HRTIM) · ESP-IDF · RP2040 · FreeRTOS · CAN/FDCAN · SPI · UART</dd></div><div><dt>Hardware</dt><dd>KiCad 4-layer · LTspice · JLCPCB assembly · logic analyzer · bring-up and rework</dd></div><div><dt>Controls</dt><dd>FOC · SVPWM · PID · LQR · observers · Kalman / EKF</dd></div><div><dt>Software</dt><dd>Python · ROS 2 · Gazebo · TensorFlow · Verilog · Git · Linux</dd></div><div><dt>Mechanical</dt><dd>Onshape · Revit · 3D printing</dd></div></dl>
+  </div>
+  <div>
+    <h2 class="sec"><span>Experience</span></h2>
+    <div class="xp"><span class="xp-org">UBC Sailbot</span><span class="xp-role">Electrical Drive Team<em>2026 – now</em></span><p>Motor drive, CAN and sensor firmware for an autonomous sailboat.</p></div><div class="xp"><span class="xp-org">Pomerleau</span><span class="xp-role">Construction Intern<em>Co-op</em></span><p>Temporary marine structures. Revit, Bluebeam and Primavera P6 over a four-month term.</p></div><div class="xp"><span class="xp-org">TotalEnergies</span><span class="xp-role">Research Intern, France<em>Internship</em></span><p>Helped develop and maintain an internal hazardous-chemical classification tool; tested it and reported bugs to IT.</p></div>
+  </div>
+</section>
+<footer class="foot">
+  <div><span class="label">Get in touch</span><a class="big" href="mailto:priceparsonstheodore@gmail.com">priceparsonstheodore@gmail.com</a></div>
+  <div class="foot-links"><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub ↗</a><!-- <a href="resume.pdf" target="_blank">Resume ↗</a> --><!-- <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn ↗</a> --></div>
+  <p class="fine">Printed on 100% recycled pixels. Vancouver, BC.</p>
+</footer>
+</div>
+</body>
+</html>
