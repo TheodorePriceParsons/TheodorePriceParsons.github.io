@@ -21,13 +21,62 @@
   <a class="back" href="../index.html#work">← All projects</a>
   <p class="label"><span class="hl-n">05</span> CAN · Bootloaders · In progress</p>
   <h1>Multi-Node CAN Bootloader</h1>
-  <p class="intro">A custom bootloader to flash several STM32s at once over a CAN bus.</p>
-  <div class="meta"><div class="tags"><span>CAN</span><span>STM32</span><span>Bootloader</span><span>C</span></div></div>
+  <p class="intro">A custom bootloader to flash several STM32s at once over a CAN bus, no debugger needed. Updates over UART work end to end and CAN is validated in loopback; the two-board CAN bus is next.</p>
+  <div class="meta"><div class="tags"><span>CAN</span><span>STM32F446</span><span>Bootloader</span><span>Register-level C</span><span>CRC-32</span><span>Python</span></div><a class="btn solid" href="https://github.com/TheodorePriceParsons/CAN_bootloader" target="_blank" rel="noopener">View source ↗</a></div>
   <div class="photos n0"></div>
-  <section class="dgs"><h2 class="dg-h">How it works</h2><figure class="diagram"><div class="dg-scroll"><svg viewBox="0 0 800 250" role="img" aria-label="Planned architecture"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ahd"/></marker></defs><g class="bx "><rect x="20" y="30" width="150" height="60" rx="3"/><text class="bt" x="95.0" y="54.0">Host</text><text class="bs" x="95.0" y="72.0">new firmware .bin</text></g><path class="ar" d="M170,60 L230,60 L230,128"/><path class="bus" d="M60,140 L780,140"/><text class="nt" x="66" y="132" text-anchor="start">CAN bus</text><path class="ar" d="M295,140 L295,168"/><g class="bx mcu"><rect x="220" y="170" width="150" height="60" rx="3"/><text class="bt" x="295.0" y="194.0">NUCLEO-G474RE</text><text class="bs" x="295.0" y="212.0">bootloader </text><text class="bs" x="295.0" y="227.0"> app</text></g><path class="ar" d="M485,140 L485,168"/><g class="bx mcu"><rect x="410" y="170" width="150" height="60" rx="3"/><text class="bt" x="485.0" y="194.0">NUCLEO-F446RE</text><text class="bs" x="485.0" y="212.0">bootloader </text><text class="bs" x="485.0" y="227.0"> app</text></g><path class="ar" d="M675,140 L675,168"/><g class="bx dash"><rect x="600" y="170" width="150" height="60" rx="3"/><text class="bt" x="675.0" y="194.0">more nodes</text><text class="bs" x="675.0" y="212.0">(Zephyr boards)</text></g><text class="nt" x="780" y="60" text-anchor="end">one transfer, every node flashed</text></svg></div><figcaption>Planned architecture</figcaption></figure></section>
+  <section class="dgs"><h2 class="dg-h">How it works</h2>
+<figure class="diagram"><div class="dg-scroll"><svg viewBox="0 0 800 150" role="img" aria-label="Flash memory map"><g class="bx mcu"><rect x="20" y="30" width="150" height="66" rx="3"/><text class="bt" x="95" y="57">Bootloader</text><text class="bs" x="95" y="77">32 KB · sectors 0-1</text></g><g class="bx acc"><rect x="180" y="30" width="150" height="66" rx="3"/><text class="bt" x="255" y="57">Header</text><text class="bs" x="255" y="77">16 KB · sector 2</text></g><g class="bx"><rect x="340" y="30" width="440" height="66" rx="3"/><text class="bt" x="560" y="57">Application</text><text class="bs" x="560" y="77">464 KB · sectors 3-7</text></g><text class="nt" x="20" y="118" text-anchor="start">0x08000000</text><text class="nt" x="180" y="118" text-anchor="start">0x08008000</text><text class="nt" x="340" y="118" text-anchor="start">0x0800C000</text><text class="nt" x="780" y="118" text-anchor="end">0x08080000</text><text class="al" x="255" y="140" text-anchor="middle">magic · version · size · CRC</text></svg></div><figcaption>Flash layout on the F446RE (512 KB). The header has its own sector so it can be erased first and written last.</figcaption></figure>
+<figure class="diagram"><div class="dg-scroll"><svg viewBox="0 0 800 250" role="img" aria-label="Planned architecture"><g class="bx "><rect x="20" y="30" width="150" height="60" rx="3"/><text class="bt" x="95.0" y="54.0">Host</text><text class="bs" x="95.0" y="72.0">new firmware .bin</text></g><path class="ar" d="M170,60 L230,60 L230,128"/><path class="bus" d="M60,140 L780,140"/><text class="nt" x="66" y="132" text-anchor="start">CAN bus · 500 kbit/s</text><path class="ar" d="M295,140 L295,168"/><g class="bx mcu"><rect x="220" y="170" width="150" height="60" rx="3"/><text class="bt" x="295.0" y="194.0">NUCLEO-G474RE</text><text class="bs" x="295.0" y="212.0">bootloader</text><text class="bs" x="295.0" y="227.0">app</text></g><path class="ar" d="M485,140 L485,168"/><g class="bx mcu"><rect x="410" y="170" width="150" height="60" rx="3"/><text class="bt" x="485.0" y="194.0">NUCLEO-F446RE</text><text class="bs" x="485.0" y="212.0">bootloader</text><text class="bs" x="485.0" y="227.0">app</text></g><path class="ar" d="M675,140 L675,168"/><g class="bx dash"><rect x="600" y="170" width="150" height="60" rx="3"/><text class="bt" x="675.0" y="194.0">more nodes</text><text class="bs" x="675.0" y="212.0">(Zephyr boards)</text></g><text class="nt" x="780" y="60" text-anchor="end">one transfer, every node flashed</text></svg></div><figcaption>Planned architecture</figcaption></figure></section>
   <div class="body">
-<h2>Goal</h2><p>Flash multiple STM32 boards at the same time over a shared CAN bus instead of plugging into each one.</p>
-<h2>Plan</h2><ul><li>Small-scale demo first with two nodes: a NUCLEO-G474RE and a NUCLEO-F446RE.</li><li>Once it works, propose it to UBC Sailbot as a prototype for flashing the boards on Zephyr, the team's next boat.</li></ul>
+<h2>Goal</h2><p>Flash multiple STM32 boards at the same time over a shared CAN bus instead of plugging a debugger into each one. The drivers are written at register level wherever possible.</p>
+
+<h2>Progress</h2><ul>
+<li><b>Done:</b> two-project setup (bootloader + app), linker scripts, vector-table handoff to the app.</li>
+<li><b>Done:</b> register-level flash driver (sector erase, 32-bit programming, cache flush) and CRC-32 matching Python's <code>zlib.crc32</code>.</li>
+<li><b>Done:</b> UART update protocol and Python host tool; a 9.5 KB app installs in about 1 s.</li>
+<li><b>Done:</b> CAN1 at 500 kbit/s validated in loopback.</li>
+<li><b>Next:</b> carry the same protocol over CAN with two boards and transceivers, then broadcast to several nodes.</li>
+</ul>
+
+<h2>Boot decision</h2><p>At reset the bootloader reads the header and the app's vector table. It jumps only if the magic number is present, the size is sane, the initial stack pointer lands in RAM and the CRC-32 of the whole image matches. Otherwise it stays and waits for an update. Holding the user button at reset forces update mode.</p><p>The jump disables interrupts, resets the clocks and peripherals, stops SysTick, clears every NVIC enable and pending bit, loads the app's stack pointer into MSP and branches to its Reset_Handler. The app then points <code>SCB-&gt;VTOR</code> at <code>0x0800C000</code> and re-enables interrupts.</p>
+
+<h2>Update protocol</h2><ul>
+<li><code>SYNC</code>: host and board agree they are talking.</li>
+<li><code>START</code> (size, CRC, version): erase the header first, then the app sectors. From this moment the old app is invalid.</li>
+<li><code>DATA</code> (offset, length, 256 bytes, chunk CRC): check the chunk CRC, program it, read it back from flash. A repeated chunk (lost ACK) is acknowledged without rewriting; a gap is rejected.</li>
+<li><code>END</code>: CRC-32 over the whole image in flash, then write version, size and CRC, and the magic number <b>last</b>, then reset into the app.</li>
+</ul><p>A power cut at any point leaves no valid magic, so the board never boots a half-written image.</p>
+<div class="term">PS&gt; python sender.py COM4 app_446re.bin 1
+app_446re.bin: 9548 bytes, CRC32 0xD2E921CF, version 1
+Synced. Erasing (a few seconds)...
+  9548/9548 bytes
+  sent in 1.0 s
+Image verified on board, header written. Board is resetting into the app.
+
+  board&gt; BL: valid app, jumping
+  board&gt; App: running
+
+      /\_/\
+     ( ^.^ )    <span class="ok">UPLOAD SUCCESSFUL</span>
+      &gt; v &lt;     9548 bytes, CRC 0xD2E921CF, v1
+     /     \
+    (|     |)~~
+     \__ __/</div>
+
+<h2>CAN loopback</h2><p>bxCAN at 45 MHz APB1: prescaler 5, 1 + 15 + 2 time quanta per bit, so 45 MHz / (5 × 18) = 500 kbit/s with the sample point at 16/18 = 88.9 %. The clock comes from the 8 MHz HSE rather than the internal RC, since CAN needs about 0.36 % accuracy here and the HSI is only ±1 %.</p><p>The first runs failed to start. Decoding the status registers found the cause: <code>BTR = 0x401E0004</code> was exactly right (loopback bit 30 set), but <code>MSR = 0x09</code> showed the controller stuck in init mode with the RX pin reading dominant. CAN only leaves init after 11 recessive bits on RX, and the unconnected PA11 was floating low. A pull-up on PA11 fixed it.</p>
+<div class="term"><span class="err">CAN: start FAILED err=0x00020000 MSR=0x00000009 BTR=0x401E0004</span>
+<span class="dim">... pull-up added on PA11 ...</span>
+CAN: started (loopback)
+CAN RX id=0x123 dlc=8 data=00 DE AD BE EF 11 22 33 <span class="ok">OK</span>
+CAN RX id=0x123 dlc=8 data=01 DE AD BE EF 11 22 33 <span class="ok">OK</span>
+CAN RX id=0x123 dlc=8 data=02 DE AD BE EF 11 22 33 <span class="ok">OK</span>
+CAN RX id=0x123 dlc=8 data=03 DE AD BE EF 11 22 33 <span class="ok">OK</span>
+CAN RX id=0x123 dlc=8 data=04 DE AD BE EF 11 22 33 <span class="ok">OK</span>
+<span class="ok">CAN: loopback 5/5 OK</span>
+BL: valid app, jumping
+App: running</div>
+
+<h2>Next</h2><ul><li>Two boards on a real bus with 3.3 V transceivers and 120 Ω termination.</li><li>Split each 256-byte chunk into 8-byte CAN frames, with a node ID per board and per-node ACKs.</li><li>Propose it to UBC Sailbot as a prototype for flashing the boards on Zephyr, the team's next boat.</li></ul>
   </div>
   <nav class="pn">
     <a href="reaction-wheel.html"><small>← Previous</small><b>Reaction-Wheel Inverted Pendulum</b></a>

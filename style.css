@@ -206,3 +206,9 @@ figcaption::before{content:"↳ ";color:var(--orange)}
 
 .frame.fit{background:var(--paper-2)}
 .frame.fit img{object-fit:contain;filter:none}
+
+/* terminal output blocks */
+.term{margin:0 0 26px;border:1.5px solid var(--ink);border-radius:2px;background:var(--ink);color:var(--paper);font:400 13px/1.6 var(--mono);padding:16px 18px;overflow-x:auto;white-space:pre}
+.term .ok{color:var(--orange)}
+.term .dim{color:var(--ink-3)}
+.term .err{color:#e0a96d}
