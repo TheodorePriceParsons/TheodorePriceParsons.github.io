@@ -2,288 +2,106 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Tape Follower · Tuner</title>
-<style>
-  :root {
-    --bg: #0B0E11;
-    --panel: #121820;
-    --panel-2: #171F29;
-    --border: #232C36;
-    --text: #E7E9EA;
-    --text-dim: #7C8894;
-    --accent: #F2C14E;
-    --trace-error: #5EEAD4;
-    --trace-output: #F2C14E;
-    --good: #4ADE80;
-    --bad: #F0555B;
-    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Consolas", monospace;
-    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); -webkit-tap-highlight-color: transparent; }
-  body { padding: 14px; max-width: 720px; margin: 0 auto; padding-bottom: 40px; }
-
-  header { display: flex; align-items: center; justify-content: space-between; padding: 4px 2px 16px; }
-  .title { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
-  .title b { color: var(--text); font-weight: 600; }
-  .status { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
-  .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bad); box-shadow: 0 0 8px var(--bad); transition: background 0.2s, box-shadow 0.2s; }
-  .status.connected .dot { background: var(--good); box-shadow: 0 0 8px var(--good); }
-  .status.connecting .dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-
-  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
-  .panel h2 { margin: 0 0 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
-  .panel .note { font-size: 11px; color: var(--text-dim); margin: 8px 0 0; line-height: 1.5; }
-
-  .scope-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-  .legend { display: flex; gap: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
-  .legend span { display: inline-flex; align-items: center; gap: 5px; }
-  .legend i { width: 10px; height: 2px; display: inline-block; }
-  .legend .err i { background: var(--trace-error); }
-  .legend .out i { background: var(--trace-output); }
-  canvas { display: block; width: 100%; height: 180px; border-radius: 6px; }
-
-  .readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
-  .readout { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
-  .readout .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--text-dim); text-transform: uppercase; }
-  .readout .v { font-family: var(--font-mono); font-size: 16px; margin-top: 2px; font-variant-numeric: tabular-nums; }
-  .readout .v.mode-strafe { color: var(--trace-error); }
-  .readout .v.mode-curve { color: var(--accent); }
-
-  .gain-row { display: grid; grid-template-columns: 78px 1fr 72px; align-items: center; gap: 12px; padding: 10px 0; }
-  .gain-row + .gain-row { border-top: 1px solid var(--border); }
-  .gain-label { font-family: var(--font-mono); font-size: 13px; color: var(--accent); font-weight: 600; }
-  input[type=range] { -webkit-appearance: none; width: 100%; height: 34px; background: transparent; }
-  input[type=range]::-webkit-slider-runnable-track { height: 4px; background: var(--border); border-radius: 2px; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; margin-top: -8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--border); }
-  input[type=range]::-moz-range-track { height: 4px; background: var(--border); border-radius: 2px; }
-  input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
-  input[type=number] { width: 100%; background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--font-mono); font-size: 14px; padding: 8px 6px; text-align: right; }
-  input[type=number]:focus { outline: 1px solid var(--accent); }
-
-  .controls-row { display: flex; gap: 10px; }
-  button { flex: 1; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; padding: 12px; border-radius: 8px; }
-  button:active { background: var(--border); }
-  button.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theo Price-Parsons</title>
+<meta name="description" content="Theo Price-Parsons. Engineering Physics at UBC. Motor control, embedded firmware, PCBs and robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<header>
-  <div class="title"><b>Tape Follower</b> · Tuner</div>
-  <div class="status" id="statusPill"><span class="dot"></span><span id="statusText">connecting</span></div>
+<div class="sheet">
+<header class="top">
+  <a class="mark" href="index.html">Theo Price-Parsons</a>
+  <nav><a href="index.html#work">Work</a><a href="index.html#about">About</a><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub</a><a href="mailto:priceparsonstheodore@gmail.com">Email</a></nav>
 </header>
 
-<div class="panel">
-  <div class="scope-head">
-    <div class="legend">
-      <span class="err"><i></i>error</span>
-      <span class="out"><i></i>pid output</span>
-    </div>
+<section class="hero" id="about">
+  <p class="label">Engineering Physics · UBC co-op · Vancouver, BC</p>
+  <h1>I build motor controllers, embedded firmware <span class="hl">and robots.</span></h1>
+  <p class="intro">Mostly STM32 and ESP32, KiCad for the boards, and a lot of control theory in between. Currently looking for mechatronics, controls and robotics co-op roles. English, Français, Deutsch.</p>
+  <div class="cta"><a class="btn solid" href="#work">See the work</a><a class="btn" href="mailto:priceparsonstheodore@gmail.com">Say hi</a></div>
+</section>
+
+<section id="work">
+  <h2 class="sec"><span>Featured</span><span class="count">9 projects</span></h2>
+  <div class="featured">
+    <a class="card" href="projects/foc-esc.html">
+      <div class="cover"><img src="assets/foc-esc-spin-poster.jpg" alt="Custom FOC ESC" loading="lazy"></div>
+      <div class="cbody"><span class="n">01 · Hardware + Firmware</span><b>Custom FOC ESC</b><small>Field-oriented control motor driver designed from scratch. 4-layer board, closed-loop current and speed control on a gimbal motor.</small><span class="go">Read more →</span></div>
+    </a>
+    <a class="card" href="projects/enph-253.html">
+      <div class="cover"><img src="assets/enph-253-robot.jpg" alt="Competition Robot: Sensor Firmware" loading="lazy"></div>
+      <div class="cbody"><span class="n">02 · ENPH 253 · Robot Summer</span><b>Competition Robot: Sensor Firmware</b><small>Dual ESP32-S3 mecanum robot. I wrote the sensor ESP: IR beacon detection, a metal detector, optical flow and the inter-ESP protocol.</small><span class="go">Read more →</span></div>
+    </a>
+    <a class="card" href="projects/sailbot.html">
+      <div class="cover"><img src="assets/sailbot-boat.jpg" alt="UBC Sailbot: Electrical Drive" loading="lazy"></div>
+      <div class="cbody"><span class="n">03 · UBC Sailbot</span><b>UBC Sailbot: Electrical Drive</b><small>Electrical Drive Team on an autonomous sailboat: IMU firmware, GNSS debugging, rudder hardware and a sensorless FOC driver.</small><span class="go">Read more →</span></div>
+    </a>
   </div>
-  <canvas id="scope"></canvas>
-  <div class="readouts">
-    <div class="readout"><div class="k">Error</div><div class="v" id="rErr">0.00</div></div>
-    <div class="readout"><div class="k">PID Output</div><div class="v" id="rOut">0.00</div></div>
-    <div class="readout"><div class="k">Mode</div><div class="v" id="rMode">--</div></div>
+  <h2 class="sec more"><span>More projects</span></h2>
+  <div class="index">
+    <a class="row" href="projects/reaction-wheel.html">
+      <span class="n">04</span>
+      <span class="t"><b>Reaction-Wheel Inverted Pendulum</b><small>Balancing a pendulum with a spinning reaction wheel. LQR state feedback with an observer, plus a Python simulation package.</small></span>
+      <span class="k">Controls</span>
+      <span class="s">Solo</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/can-bootloader.html">
+      <span class="n">05</span>
+      <span class="t"><b>Multi-Node CAN Bootloader</b><small>A custom bootloader to flash several STM32s at once over a CAN bus.</small></span>
+      <span class="k">CAN · Bootloaders</span>
+      <span class="s">In progress</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/fizz-detective.html">
+      <span class="n">06</span>
+      <span class="t"><b>Fizz Detective</b><small>Autonomous robot competition in Gazebo: camera-based driving and clue reading with ROS 2 and TensorFlow.</small></span>
+      <span class="k">ENPH 353 · ROS 2</span>
+      <span class="s">In progress</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/sonar.html">
+      <span class="n">07</span>
+      <span class="t"><b>Phased-Array Imaging Sonar</b><small>An 8×8 ultrasonic phased array at 40 kHz for 3D imaging in air, on a DE10-Lite FPGA with a custom shield.</small></span>
+      <span class="k">FPGA · PCB</span>
+      <span class="s">In design</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/servo-pcb.html">
+      <span class="n">08</span>
+      <span class="t"><b>Continuous Servo Controller PCB</b><small>My first board: a motor control PCB taken from breadboard prototype to Gerbers.</small></span>
+      <span class="k">Hardware</span>
+      <span class="s">First PCB</span>
+      <span class="arr">→</span>
+    </a>
+    <a class="row" href="projects/etf-optimizer.html">
+      <span class="n">09</span>
+      <span class="t"><b>ETF Portfolio Optimizer</b><small>Constrained mean-variance optimizer with a closed-form Lagrangian solution and Kalman-filtered prices.</small></span>
+      <span class="k">Quant · Software</span>
+      <span class="s">Collab</span>
+      <span class="arr">→</span>
+    </a>
   </div>
-  <div class="note">PID output is computed live but not yet wired to the motors -- applyCorrection() still drives strafe/rotate off the raw error. Watch this to see what it would do.</div>
+</section>
+
+<section class="two">
+  <div>
+    <h2 class="sec"><span>Toolbox</span></h2>
+    <dl class="tools"><div><dt>Embedded</dt><dd>C · STM32 (CubeMX, HRTIM) · ESP-IDF · RP2040 · FreeRTOS · CAN/FDCAN · SPI · UART</dd></div><div><dt>Hardware</dt><dd>KiCad 4-layer · LTspice · JLCPCB assembly · logic analyzer · bring-up and rework</dd></div><div><dt>Controls</dt><dd>FOC · SVPWM · PID · LQR · observers · Kalman / EKF</dd></div><div><dt>Software</dt><dd>Python · ROS 2 · Gazebo · TensorFlow · Verilog · Git · Linux</dd></div><div><dt>Mechanical</dt><dd>Onshape · Revit · 3D printing</dd></div></dl>
+  </div>
+  <div>
+    <h2 class="sec"><span>Experience</span></h2>
+    <div class="xp"><span class="xp-org">UBC Sailbot</span><span class="xp-role">Electrical Drive Team<em>2026 – now</em></span><p>Motor drive, CAN and sensor firmware for an autonomous sailboat.</p></div><div class="xp"><span class="xp-org">Pomerleau</span><span class="xp-role">Construction Intern<em>Co-op</em></span><p>Temporary marine structures. Revit, Bluebeam and Primavera P6 over a four-month term.</p></div><div class="xp"><span class="xp-org">TotalEnergies</span><span class="xp-role">Research Intern, France<em>Internship</em></span><p>Helped develop and maintain an internal hazardous-chemical classification tool; tested it and reported bugs to IT.</p></div>
+  </div>
+</section>
+<footer class="foot">
+  <div><span class="label">Get in touch</span><a class="big" href="mailto:priceparsonstheodore@gmail.com">priceparsonstheodore@gmail.com</a></div>
+  <div class="foot-links"><a href="https://github.com/TheodorePriceParsons" target="_blank" rel="noopener">GitHub ↗</a><!-- <a href="resume.pdf" target="_blank">Resume ↗</a> --><!-- <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn ↗</a> --></div>
+  <p class="fine">Printed on 100% recycled pixels. Vancouver, BC.</p>
+</footer>
 </div>
-
-<div class="panel">
-  <h2>PID gains</h2>
-  <div class="gain-row">
-    <div class="gain-label">Kp</div>
-    <input type="range" id="kpSlider" min="0" max="100" step="0.1">
-    <input type="number" id="kpNum" min="0" step="0.1">
-  </div>
-  <div class="gain-row">
-    <div class="gain-label">Ki</div>
-    <input type="range" id="kiSlider" min="0" max="5" step="0.01">
-    <input type="number" id="kiNum" min="0" step="0.01">
-  </div>
-  <div class="gain-row">
-    <div class="gain-label">Kd</div>
-    <input type="range" id="kdSlider" min="0" max="50" step="0.1">
-    <input type="number" id="kdNum" min="0" step="0.1">
-  </div>
-</div>
-
-<div class="panel">
-  <h2>Drive speeds</h2>
-  <div class="gain-row">
-    <div class="gain-label">Base</div>
-    <input type="range" id="baseSlider" min="0" max="255" step="1">
-    <input type="number" id="baseNum" min="0" max="255" step="1">
-  </div>
-  <div class="gain-row">
-    <div class="gain-label">Strafe</div>
-    <input type="range" id="strafeSlider" min="0" max="255" step="1">
-    <input type="number" id="strafeNum" min="0" max="255" step="1">
-  </div>
-  <div class="gain-row">
-    <div class="gain-label">Rotate</div>
-    <input type="range" id="rotateSlider" min="0" max="255" step="1">
-    <input type="number" id="rotateNum" min="0" max="255" step="1">
-  </div>
-  <div class="gain-row">
-    <div class="gain-label">Curve #</div>
-    <input type="range" id="curveSlider" min="1" max="30" step="1">
-    <input type="number" id="curveNum" min="1" max="30" step="1">
-  </div>
-</div>
-
-<div class="controls-row">
-  <button id="pauseBtn">Pause</button>
-  <button id="clearBtn">Clear</button>
-</div>
-
-<script>
-  const RING_SIZE = 240;
-  const errBuf = [];
-  const outBuf = [];
-  let paused = false;
-
-  const canvas = document.getElementById('scope');
-  const ctx = canvas.getContext('2d');
-
-  function resizeCanvas() {
-    const dpr = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    draw();
-  }
-  window.addEventListener('resize', resizeCanvas);
-
-  function traceLine(buf, maxAbs, color, w, h) {
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1.8;
-    ctx.beginPath();
-    for (let i = 0; i < buf.length; i++) {
-      const x = (i / (RING_SIZE - 1)) * w;
-      const y = h / 2 - (buf[i] / maxAbs) * (h / 2 - 6);
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-  }
-
-  function draw() {
-    const w = canvas.getBoundingClientRect().width;
-    const h = canvas.getBoundingClientRect().height;
-    ctx.clearRect(0, 0, w, h);
-
-    ctx.strokeStyle = '#1B222B';
-    ctx.lineWidth = 1;
-    for (let i = 1; i < 4; i++) {
-      const y = (h / 4) * i;
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-    }
-    ctx.strokeStyle = '#2B3542';
-    ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
-
-    if (errBuf.length < 2) return;
-
-    // each series auto-scales independently -- error lives in -1..1,
-    // pid output lives in -255..255, they'd never share a scale usefully
-    let maxErr = 0.05, maxOut = 5;
-    for (let i = 0; i < errBuf.length; i++) {
-      maxErr = Math.max(maxErr, Math.abs(errBuf[i]));
-      maxOut = Math.max(maxOut, Math.abs(outBuf[i]));
-    }
-    traceLine(outBuf, maxOut, 'rgba(242, 193, 78, 0.55)', w, h);
-    traceLine(errBuf, maxErr, '#5EEAD4', w, h);
-  }
-
-  function pushSample(err, out) {
-    errBuf.push(err); outBuf.push(out);
-    if (errBuf.length > RING_SIZE) { errBuf.shift(); outBuf.shift(); }
-    draw();
-  }
-  function clearScope() { errBuf.length = 0; outBuf.length = 0; draw(); }
-
-  const statusPill = document.getElementById('statusPill');
-  const statusText = document.getElementById('statusText');
-  let ws;
-
-  function setStatus(state) { statusPill.className = 'status ' + state; statusText.textContent = state; }
-
-  function connect() {
-    setStatus('connecting');
-    ws = new WebSocket('ws://' + location.host + '/ws');
-    ws.onopen = () => setStatus('connected');
-    ws.onclose = () => { setStatus('disconnected'); setTimeout(connect, 1500); };
-    ws.onerror = () => ws.close();
-
-    ws.onmessage = (evt) => {
-      let msg;
-      try { msg = JSON.parse(evt.data); } catch (e) { return; }
-
-      if (msg.type === 'telem') {
-        if (paused) return;
-        document.getElementById('rErr').textContent = msg.err.toFixed(2);
-        document.getElementById('rOut').textContent = msg.out.toFixed(2);
-        const modeEl = document.getElementById('rMode');
-        modeEl.textContent = msg.curve ? 'CURVE' : 'STRAFE';
-        modeEl.className = 'v ' + (msg.curve ? 'mode-curve' : 'mode-strafe');
-        pushSample(msg.err, msg.out);
-      } else if (msg.type === 'params') {
-        kpSlider.value = msg.kp; kpNum.value = msg.kp;
-        kiSlider.value = msg.ki; kiNum.value = msg.ki;
-        kdSlider.value = msg.kd; kdNum.value = msg.kd;
-        baseSlider.value = msg.base; baseNum.value = msg.base;
-        strafeSlider.value = msg.strafe; strafeNum.value = msg.strafe;
-        rotateSlider.value = msg.rotate; rotateNum.value = msg.rotate;
-        curveSlider.value = msg.curve; curveNum.value = msg.curve;
-      }
-    };
-  }
-
-  const kpSlider = document.getElementById('kpSlider'), kpNum = document.getElementById('kpNum');
-  const kiSlider = document.getElementById('kiSlider'), kiNum = document.getElementById('kiNum');
-  const kdSlider = document.getElementById('kdSlider'), kdNum = document.getElementById('kdNum');
-  const baseSlider = document.getElementById('baseSlider'), baseNum = document.getElementById('baseNum');
-  const strafeSlider = document.getElementById('strafeSlider'), strafeNum = document.getElementById('strafeNum');
-  const rotateSlider = document.getElementById('rotateSlider'), rotateNum = document.getElementById('rotateNum');
-  const curveSlider = document.getElementById('curveSlider'), curveNum = document.getElementById('curveNum');
-
-  let sendTimer = null;
-  function scheduleSend() {
-    clearTimeout(sendTimer);
-    sendTimer = setTimeout(() => {
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({
-          type: 'params',
-          kp: parseFloat(kpNum.value) || 0,
-          ki: parseFloat(kiNum.value) || 0,
-          kd: parseFloat(kdNum.value) || 0,
-          base: parseInt(baseNum.value) || 0,
-          strafe: parseInt(strafeNum.value) || 0,
-          rotate: parseInt(rotateNum.value) || 0,
-          curve: parseInt(curveNum.value) || 1
-        }));
-      }
-    }, 80);
-  }
-
-  function linkPair(slider, num) {
-    slider.addEventListener('input', () => { num.value = slider.value; scheduleSend(); });
-    num.addEventListener('input', () => { slider.value = num.value; scheduleSend(); });
-  }
-  [[kpSlider,kpNum],[kiSlider,kiNum],[kdSlider,kdNum],[baseSlider,baseNum],[strafeSlider,strafeNum],[rotateSlider,rotateNum],[curveSlider,curveNum]]
-    .forEach(([s,n]) => linkPair(s,n));
-
-  document.getElementById('pauseBtn').addEventListener('click', (e) => {
-    paused = !paused;
-    e.target.classList.toggle('on', paused);
-    e.target.textContent = paused ? 'Resume' : 'Pause';
-  });
-  document.getElementById('clearBtn').addEventListener('click', clearScope);
-
-  resizeCanvas();
-  connect();
-</script>
 </body>
 </html>
